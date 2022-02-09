@@ -1,0 +1,194 @@
+package com.example.negri_doori;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
+
+class NewThread extends Thread{
+    public void run(){
+        String dick = null;
+        Log.d(dick, "SUCCESS");
+    }
+}
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        ImageView imageView = findViewById(R.id.imageView);
+
+        final int[] k = {0};
+        Button change = findViewById(R.id.button3);
+
+
+         class ChangeImage extends Thread {
+            public void run() {
+                View.OnClickListener listener = new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                    if (k[0] % 2 == 0)
+                                        imageView.setImageResource(R.mipmap.ic_launcher2_foreground);
+                                    else
+                                        imageView.setImageResource(R.mipmap.ic_launcher1_foreground);
+                                    k[0] += 1;
+                            }
+                        };
+                change.setOnClickListener(listener);
+                while(true) {
+                    if (k[0] % 2 == 0)
+                        imageView.setImageResource(R.mipmap.ic_launcher2_foreground);
+                    else
+                        imageView.setImageResource(R.mipmap.ic_launcher1_foreground);
+                    k[0] += 1;
+                    try {
+                        ChangeImage.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+            ChangeImage bebra = new ChangeImage();
+            bebra.start();
+         /*while(true) {
+                bebra.start();
+                try {
+                    bebra.sleep(200);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }*/
+
+    }
+}//mainact
+
+
+
+
+
+
+
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <fragment
+        android:id="@+id/layout"
+        android:name="com.example.negri_doori.layoutClass"
+        android:layout_width="match_parent"
+        android:layout_height="390dp"
+        android:layout_weight="1"
+        tools:layout="@layout/layout" />
+
+    <fragment
+        android:id="@+id/layout1"
+        android:name="com.example.negri_doori.layoutClass1"
+        android:layout_width="match_parent"
+        android:layout_height="390dp"
+        android:layout_weight="1"
+        tools:layout="@layout/layout3" />
+
+
+</LinearLayout>//mainact
+
+
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="350dp"
+        android:layout_weight="1"
+        app:srcCompat="@mipmap/ic_launcher1_foreground" />
+</LinearLayout>//layout1
+
+
+
+
+
+
+
+package com.example.negri_doori;
+
+import android.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+public class layoutClass extends Fragment {
+    @Override
+    // Переопределяем метод onCreateView
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.layout, container, false);
+        return view;
+    }
+}
+//layout1_java
+
+
+
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_weight="1"
+        android:text="ПОМЕНЯТЬ КАРТИНКУ!!!!!!!"
+        android:textSize="50dp"/>
+</LinearLayout>//layout2
+
+
+
+
+
+
+package com.example.negri_doori;
+
+import android.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+public class layoutClass1 extends Fragment {
+    @Override
+    // Переопределяем метод onCreateView
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.layout3, container, false);
+        return view;
+    }
+}
+//layout2_java
